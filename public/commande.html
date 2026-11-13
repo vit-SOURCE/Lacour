@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Commander</title>
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root{--bg:#f2f5f4;--sf:#fff;--tx:#12262a;--mu:#5d7177;--bd:#d5dfdd;--ac:#0f766e;--acx:#fff;--bad:#b42318;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1b1d;--sf:#16282b;--tx:#e6f0ee;--mu:#93a8ab;--bd:#2a4145;--ac:#2dd4bf;--acx:#06302b;--bad:#f87171;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1b1d;--sf:#16282b;--tx:#e6f0ee;--mu:#93a8ab;--bd:#2a4145;--ac:#2dd4bf;--acx:#06302b;--bad:#f87171;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+h1{font-size:22px;margin:4px 0 2px}
+h2{font-size:17px;margin:22px 0 8px}
+.mu{color:var(--mu);font-size:14px}
+.it{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:8px}
+.q{display:flex;align-items:center;gap:10px}
+.q button{width:38px;height:38px;border-radius:50%;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:20px;cursor:pointer}
+.q b{min-width:20px;text-align:center}
+label{display:block;font-size:14px;color:var(--mu);margin:12px 0 4px}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:10px;width:100%}
+.tot{display:flex;justify-content:space-between;font-weight:700;font-size:18px;margin:16px 0 4px}
+.send{display:block;text-align:center;text-decoration:none;background:var(--ac);color:var(--acx);padding:14px;border-radius:10px;font-weight:700;margin-top:14px}
+.send.off{opacity:.55}
+.err{color:var(--bad);font-size:14px;min-height:20px;margin-top:8px}
+.warn{background:var(--sf);border:1px solid var(--bad);color:var(--bad);border-radius:10px;padding:12px;margin:12px 0}
+details{margin-top:14px}.ok{background:var(--sf);border:2px solid var(--ac);border-radius:10px;padding:16px;margin-top:16px}.wa{display:block;text-align:center;text-decoration:none;border:1px solid var(--bd);color:var(--tx);padding:12px;border-radius:10px;margin-top:10px}.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+textarea{min-height:140px}
+.lgchip{background:#fff;border-radius:12px;padding:6px 12px;display:inline-flex}.lgchip img{height:44px;display:block}.gh{font-size:15px;margin:16px 0 6px;color:var(--ac)}</style>
+</head>
+<body>
+<main>
+<div class="lgchip" style="margin-bottom:10px"><img id="lgp" src="data:image/png;base64,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" alt="LaCour"></div>
+<h1 id="nm">Commander</h1>
+<div class="mu">Choisissez vos plats et envoyez votre commande : le restaurant la reçoit tout de suite et vous rappelle pour la confirmer.</div>
+<div id="warn"></div>
+<h2>Menu</h2>
+<div id="menu"><p class="mu">Chargement du menu…</p></div>
+<div class="tot"><span>Total</span><span id="tot">0</span></div>
+<h2>Vos informations</h2>
+<label for="n">Nom</label><input id="n" autocomplete="name">
+<label for="p">Téléphone</label><input id="p" type="tel" autocomplete="tel" inputmode="tel">
+<label for="m">Mode de réception</label>
+<select id="m"><option value="liv">Livraison</option><option value="ret">Retrait au restaurant</option></select>
+<div id="af"><label for="a">Adresse de livraison</label><input id="a" autocomplete="street-address"></div>
+<label for="x">Remarque (facultatif)</label><input id="x">
+<div class="hp" aria-hidden="true"><label>Ne pas remplir</label><input id="site" tabindex="-1" autocomplete="off"></div>
+<button class="send" id="go" type="button" style="width:100%;border:0;font:inherit;font-weight:700;cursor:pointer">Envoyer ma commande</button>
+<div class="err" id="err"></div>
+<div id="done"></div>
+</main>
+<script>
+function grouped(c){var gs=c.groups||[];if(!gs.length)return c.menu;var out=[];gs.forEach(function(g){var it=c.menu.filter(function(m){return m.gid===g.id});if(it.length){out.push({h:g.name});it.forEach(function(m){out.push(m)})}});var rest=c.menu.filter(function(m){return!gs.some(function(g){return g.id===m.gid})});if(rest.length){out.push({h:"Autres"});rest.forEach(function(m){out.push(m)})}return out}
+var CFG={name:"RESTAURANT LACOUR",cur:"FCFA",wa:"",menu:[]},q={};
+var $=function(i){return document.getElementById(i)};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var fmt=function(n){return n.toLocaleString("fr-FR")+" "+CFG.cur};
+var sum=function(){return CFG.menu.reduce(function(a,m){return a+m.price*(q[m.id]||0)},0)};
+function upd(){$("tot").textContent=fmt(sum())}
+fetch("/api/public").then(function(r){return r.json()}).then(function(c){
+  CFG=c;if(c.logo&&$("lgp"))$("lgp").src=c.logo;document.title="Commander · "+c.name;$("nm").textContent=c.name;
+  if(!c.menu.length){$("menu").innerHTML='<p class="mu">Le menu n’est pas encore disponible.</p>';return}
+  $("menu").innerHTML=grouped(c).map(function(m){if(m.h)return '<h3 class="gh">'+esc(m.h)+'</h3>';return '<div class="it"><div><b>'+esc(m.name)+'</b><div class="mu">'+fmt(m.price)+'</div></div><div class="q"><button type="button" aria-label="Retirer" data-i="'+esc(m.id)+'" data-d="-1">−</button><b id="q_'+esc(m.id)+'">0</b><button type="button" aria-label="Ajouter" data-i="'+esc(m.id)+'" data-d="1">+</button></div></div>'}).join("");
+  upd();
+}).catch(function(){$("warn").innerHTML='<div class="warn">Impossible de charger le menu. Vérifiez votre connexion et actualisez la page.</div>'});
+$("menu").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var i=b.dataset.i;q[i]=Math.max(0,(q[i]||0)+Number(b.dataset.d));$("q_"+i).textContent=q[i];upd()});
+$("m").addEventListener("change",function(){$("af").style.display=$("m").value==="liv"?"":"none"});
+function payload(){var liv=$("m").value==="liv";return{n:$("n").value.trim(),p:$("p").value.trim(),a:liv?$("a").value.trim():"",m:liv?"liv":"ret",x:$("x").value.trim(),site:$("site").value,i:CFG.menu.filter(function(m){return q[m.id]>0}).map(function(m){return[m.id,q[m.id]]})}}
+$("go").addEventListener("click",function(){
+  var d=payload(),err="";
+  if(!d.i.length)err="Ajoutez au moins un article.";else if(!d.n)err="Indiquez votre nom.";else if(d.p.replace(/\D/g,"").length<8)err="Indiquez un numéro de téléphone valide.";else if(d.m==="liv"&&!d.a)err="Indiquez l’adresse de livraison.";
+  $("err").textContent=err;if(err)return;
+  var b=$("go");b.disabled=true;b.textContent="Envoi en cours…";
+  fetch("/api/public/order",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)}).then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})}).then(function(r){
+    if(!r.ok){$("err").textContent=r.j.err||"Envoi impossible. Réessayez.";b.disabled=false;b.textContent="Envoyer ma commande";return}
+    b.style.display="none";q={};
+    $("done").innerHTML='<div class="ok"><b>Merci '+esc(d.n)+' ! Votre commande est envoyée.</b><p class="mu">Numéro de commande : '+esc(r.j.id)+'. Le restaurant vous appellera au '+esc(d.p)+' pour la confirmer.</p>'+(CFG.wa?'<a class="wa" target="_blank" rel="noopener" href="https://wa.me/'+CFG.wa+'?text='+encodeURIComponent("Bonjour, je viens de passer la commande "+r.j.id+" au nom de "+d.n+".")+'">Écrire au restaurant sur WhatsApp</a>':"")+'</div>';
+    window.scrollTo(0,document.body.scrollHeight);
+  }).catch(function(){$("err").textContent="Envoi impossible. Vérifiez votre connexion.";b.disabled=false;b.textContent="Envoyer ma commande"});
+});
+</script>
+</body>
+</html>
